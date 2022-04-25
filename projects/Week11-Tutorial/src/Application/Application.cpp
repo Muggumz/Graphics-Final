@@ -351,6 +351,40 @@ void Application::_Update() {
 		std::cout << travelDirection << std::endl;
 	}
 
+	if ((InputEngine::GetKeyState(GLFW_KEY_SPACE) == ButtonState::Pressed) && (canjumping == true))
+	{
+		jumping = true;
+		canjumping = false;
+	}
+
+	if (jumping == true)
+	{
+		if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z < 3)
+		{
+			app.CurrentScene()->FindObjectByName("Monkey 1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().x, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().y, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z + 0.05));
+
+		}
+		else if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z >= 3)
+		{
+			jumping = false;
+		}
+	}
+
+	if (jumping == false)
+	{
+		if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z >= 0)
+		{
+			app.CurrentScene()->FindObjectByName("Monkey 1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().x, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().y, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z - 0.08));
+
+		}
+		else if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z <= 0.85)
+		{
+			canjumping = true;
+		}
+
+	}
+
+	
 }
 
 void Application::_LateUpdate() {

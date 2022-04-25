@@ -161,5 +161,7 @@ protected:
 	bool ambiLight = true;
 	float moveTime = 0; //determines how long the enemy is going to move in a direction
 	float travelDirection = 0; // value to determine which way the enemy moves
+	bool jumping = false;
+	bool canjumping = true;
 
 };

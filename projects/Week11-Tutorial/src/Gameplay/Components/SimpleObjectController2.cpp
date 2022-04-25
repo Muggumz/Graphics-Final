@@ -43,9 +43,6 @@ void SimpleObjectController::Update(float deltaTime)
 		//if (InputEngine::IsKeyDown(GLFW_KEY_LEFT_CONTROL)) {
 			//_moveVector.y -= _moveSpeeds.z;
 		//}
-		if (InputEngine::IsKeyDown(GLFW_KEY_SPACE)) {
-			_moveVector.y += _moveSpeeds.z;
-		}
 		//if (InputEngine::IsKeyDown(GLFW_KEY_LEFT_SHIFT)) {
 			//_moveVector += 3.0f;
 		//}
