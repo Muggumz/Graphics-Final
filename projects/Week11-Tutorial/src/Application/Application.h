@@ -156,4 +156,6 @@ protected:
 
 	static Application* _singleton;
 	static std::string  _applicationName;
+
+	bool ambiLight = true;
 };
