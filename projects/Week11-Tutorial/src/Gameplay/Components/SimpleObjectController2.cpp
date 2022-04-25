@@ -49,8 +49,8 @@ void SimpleObjectController::Update(float deltaTime)
 		if (InputEngine::IsKeyDown(GLFW_KEY_LEFT_SHIFT)) {
 			_moveVector += 3.0f;
 		}
-		/*std::cout << GetGameObject()->GetPosition().z << std::endl;
-		_moveVector *= deltaTime;*/
+		//std::cout << GetGameObject()->GetPosition().z << std::endl;
+		_moveVector *= deltaTime;
 
 		GetGameObject()->SetPostion(GetGameObject()->GetPosition() + _moveVector);
 	}

@@ -425,6 +425,7 @@ void DefaultSceneLayer::_CreateScene()
 		{
 			// Set position in the scene
 			monkey1->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+			monkey1->SetRotation(glm::vec3(0.0f, 0.0f, 90.0f));
 
 			// Add some behaviour that relies on the physics body
 			monkey1->Add<JumpBehaviour>();
