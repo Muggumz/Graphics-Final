@@ -32,6 +32,8 @@
 #include "Gameplay/Material.h"
 #include "Gameplay/GameObject.h"
 #include "Gameplay/Scene.h"
+#include <stdio.h>
+#include <time.h>
 
 // Components
 #include "Gameplay/Components/IComponent.h"
@@ -221,6 +223,7 @@ void Application::_Run()
 		timing._unscaledTimeSinceSceneLoad += dt;
 
 		ImGuiHelper::StartFrame();
+		srand(time(NULL));
 
 		// Core update loop
 		if (_currentScene != nullptr) {
@@ -317,6 +320,7 @@ void Application::_Update() {
 	{
 		if (ambiLight == true)
 		{
+
 			app.CurrentScene()->SetAmbientLight(glm::vec3(0.1f));
 			ambiLight = false;
 		}
@@ -327,7 +331,25 @@ void Application::_Update() {
 		}
 	}
 
+	if (moveTime <= glfwGetTime())
+	{
+		travelDirection = rand() % 2 + 1;
+		moveTime = glfwGetTime() + (rand() % 3 + 1);
+	}
 
+	if (moveTime > glfwGetTime())
+	{
+		if (travelDirection >= 1.5) // go minus x
+		{
+			app.CurrentScene()->FindObjectByName("person1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("person1")->GetPosition().x - 0.05, app.CurrentScene()->FindObjectByName("person1")->GetPosition().y, app.CurrentScene()->FindObjectByName("person1")->GetPosition().z));
+		}
+		else if (travelDirection < 1.5) // go positive x
+		{
+			app.CurrentScene()->FindObjectByName("person1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("person1")->GetPosition().x + 0.05, app.CurrentScene()->FindObjectByName("person1")->GetPosition().y, app.CurrentScene()->FindObjectByName("person1")->GetPosition().z));
+		}
+		
+		std::cout << travelDirection << std::endl;
+	}
 
 }
 

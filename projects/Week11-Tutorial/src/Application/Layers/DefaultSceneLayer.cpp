@@ -508,127 +508,146 @@ void DefaultSceneLayer::_CreateScene()
 
 		GameObject::Sptr demoBase = scene->CreateGameObject("Demo Parent");
 
-		GameObject::Sptr polkaBox = scene->CreateGameObject("Polka Box");
-		{
-			MeshResource::Sptr boxMesh = ResourceManager::CreateAsset<MeshResource>();
-			boxMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
-			boxMesh->GenerateMesh();
+		//GameObject::Sptr polkaBox = scene->CreateGameObject("Polka Box");
+		//{
+		//	MeshResource::Sptr boxMesh = ResourceManager::CreateAsset<MeshResource>();
+		//	boxMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
+		//	boxMesh->GenerateMesh();
 
-			// Set and rotation position in the scene
-			polkaBox->SetPostion(glm::vec3(0, 0.0f, 3.0f));
+		//	// Set and rotation position in the scene
+		//	polkaBox->SetPostion(glm::vec3(0, 0.0f, 3.0f));
 
-			// Add a render component
-			RenderComponent::Sptr renderer = polkaBox->Add<RenderComponent>();
-			renderer->SetMesh(boxMesh);
-			renderer->SetMaterial(polka);
+		//	// Add a render component
+		//	RenderComponent::Sptr renderer = polkaBox->Add<RenderComponent>();
+		//	renderer->SetMesh(boxMesh);
+		//	renderer->SetMaterial(polka);
 
-			demoBase->AddChild(polkaBox);
-		}
+		//	demoBase->AddChild(polkaBox);
+		//}
 
-		// Box to showcase the specular material
-		GameObject::Sptr specBox = scene->CreateGameObject("Specular Object");
-		{
-			MeshResource::Sptr boxMesh = ResourceManager::CreateAsset<MeshResource>();
-			boxMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
-			boxMesh->GenerateMesh();
+		//// Box to showcase the specular material
+		//GameObject::Sptr specBox = scene->CreateGameObject("Specular Object");
+		//{
+		//	MeshResource::Sptr boxMesh = ResourceManager::CreateAsset<MeshResource>();
+		//	boxMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
+		//	boxMesh->GenerateMesh();
 
-			// Set and rotation position in the scene
-			specBox->SetPostion(glm::vec3(0, -4.0f, 1.0f));
+		//	// Set and rotation position in the scene
+		//	specBox->SetPostion(glm::vec3(0, -4.0f, 1.0f));
 
-			// Add a render component
-			RenderComponent::Sptr renderer = specBox->Add<RenderComponent>();
-			renderer->SetMesh(boxMesh);
-			renderer->SetMaterial(testMaterial); 
+		//	// Add a render component
+		//	RenderComponent::Sptr renderer = specBox->Add<RenderComponent>();
+		//	renderer->SetMesh(boxMesh);
+		//	renderer->SetMaterial(testMaterial); 
 
-			demoBase->AddChild(specBox);
-		}
+		//	demoBase->AddChild(specBox);
+		//}
 
-		
+		//
 
-		// sphere to showcase the foliage material
-		GameObject::Sptr foliageBall = scene->CreateGameObject("Foliage Sphere");
-		{
-			// Set and rotation position in the scene
-			foliageBall->SetPostion(glm::vec3(-4.0f, -4.0f, 1.0f));
+		//// sphere to showcase the foliage material
+		//GameObject::Sptr foliageBall = scene->CreateGameObject("Foliage Sphere");
+		//{
+		//	// Set and rotation position in the scene
+		//	foliageBall->SetPostion(glm::vec3(-4.0f, -4.0f, 1.0f));
 
-			// Add a render component
-			RenderComponent::Sptr renderer = foliageBall->Add<RenderComponent>();
-			renderer->SetMesh(sphere);
-			renderer->SetMaterial(foliageMaterial);
+		//	// Add a render component
+		//	RenderComponent::Sptr renderer = foliageBall->Add<RenderComponent>();
+		//	renderer->SetMesh(sphere);
+		//	renderer->SetMaterial(foliageMaterial);
 
-			demoBase->AddChild(foliageBall);
-		}
+		//	demoBase->AddChild(foliageBall);
+		//}
 
-		// Box to showcase the foliage material
-		GameObject::Sptr foliageBox = scene->CreateGameObject("Foliage Box");
-		{
-			MeshResource::Sptr box = ResourceManager::CreateAsset<MeshResource>();
-			box->AddParam(MeshBuilderParam::CreateCube(glm::vec3(0, 0, 0.5f), ONE));
-			box->GenerateMesh();
+		//// Box to showcase the foliage material
+		//GameObject::Sptr foliageBox = scene->CreateGameObject("Foliage Box");
+		//{
+		//	MeshResource::Sptr box = ResourceManager::CreateAsset<MeshResource>();
+		//	box->AddParam(MeshBuilderParam::CreateCube(glm::vec3(0, 0, 0.5f), ONE));
+		//	box->GenerateMesh();
 
-			// Set and rotation position in the scene
-			foliageBox->SetPostion(glm::vec3(-6.0f, -4.0f, 1.0f));
+		//	// Set and rotation position in the scene
+		//	foliageBox->SetPostion(glm::vec3(-6.0f, -4.0f, 1.0f));
 
-			// Add a render component
-			RenderComponent::Sptr renderer = foliageBox->Add<RenderComponent>();
-			renderer->SetMesh(box);
-			renderer->SetMaterial(foliageMaterial);
+		//	// Add a render component
+		//	RenderComponent::Sptr renderer = foliageBox->Add<RenderComponent>();
+		//	renderer->SetMesh(box);
+		//	renderer->SetMaterial(foliageMaterial);
 
-			demoBase->AddChild(foliageBox);
-		}
+		//	demoBase->AddChild(foliageBox);
+		//}
 
-		// Box to showcase the specular material
-		GameObject::Sptr toonBall = scene->CreateGameObject("Toon Object");
-		{
-			// Set and rotation position in the scene
-			toonBall->SetPostion(glm::vec3(-2.0f, -4.0f, 1.0f));
+		//// Box to showcase the specular material
+		//GameObject::Sptr toonBall = scene->CreateGameObject("Toon Object");
+		//{
+		//	// Set and rotation position in the scene
+		//	toonBall->SetPostion(glm::vec3(-2.0f, -4.0f, 1.0f));
 
-			// Add a render component
-			RenderComponent::Sptr renderer = toonBall->Add<RenderComponent>();
-			renderer->SetMesh(sphere);
-			renderer->SetMaterial(toonMaterial);
+		//	// Add a render component
+		//	RenderComponent::Sptr renderer = toonBall->Add<RenderComponent>();
+		//	renderer->SetMesh(sphere);
+		//	renderer->SetMaterial(toonMaterial);
 
-			demoBase->AddChild(toonBall);
-		}
+		//	demoBase->AddChild(toonBall);
+		//}
 
-		GameObject::Sptr displacementBall = scene->CreateGameObject("Displacement Object");
-		{
-			// Set and rotation position in the scene
-			displacementBall->SetPostion(glm::vec3(2.0f, -4.0f, 1.0f));
+		//GameObject::Sptr displacementBall = scene->CreateGameObject("Displacement Object");
+		//{
+		//	// Set and rotation position in the scene
+		//	displacementBall->SetPostion(glm::vec3(2.0f, -4.0f, 1.0f));
 
-			// Add a render component
-			RenderComponent::Sptr renderer = displacementBall->Add<RenderComponent>();
-			renderer->SetMesh(sphere);
-			renderer->SetMaterial(displacementTest);
+		//	// Add a render component
+		//	RenderComponent::Sptr renderer = displacementBall->Add<RenderComponent>();
+		//	renderer->SetMesh(sphere);
+		//	renderer->SetMaterial(displacementTest);
 
-			demoBase->AddChild(displacementBall);
-		}
+		//	demoBase->AddChild(displacementBall);
+		//}
 
-		GameObject::Sptr multiTextureBall = scene->CreateGameObject("Multitextured Object");
-		{
-			// Set and rotation position in the scene 
-			multiTextureBall->SetPostion(glm::vec3(4.0f, -4.0f, 1.0f));
+		//GameObject::Sptr multiTextureBall = scene->CreateGameObject("Multitextured Object");
+		//{
+		//	// Set and rotation position in the scene 
+		//	multiTextureBall->SetPostion(glm::vec3(4.0f, -4.0f, 1.0f));
 
-			// Add a render component 
-			RenderComponent::Sptr renderer = multiTextureBall->Add<RenderComponent>();
-			renderer->SetMesh(sphere);
-			renderer->SetMaterial(multiTextureMat);
+		//	// Add a render component 
+		//	RenderComponent::Sptr renderer = multiTextureBall->Add<RenderComponent>();
+		//	renderer->SetMesh(sphere);
+		//	renderer->SetMaterial(multiTextureMat);
 
-			demoBase->AddChild(multiTextureBall);
-		}
+		//	demoBase->AddChild(multiTextureBall);
+		//}
 
-		GameObject::Sptr normalMapBall = scene->CreateGameObject("Normal Mapped Object");
-		{
-			// Set and rotation position in the scene 
-			normalMapBall->SetPostion(glm::vec3(6.0f, -4.0f, 1.0f));
+		//GameObject::Sptr normalMapBall = scene->CreateGameObject("Normal Mapped Object");
+		//{
+		//	// Set and rotation position in the scene 
+		//	normalMapBall->SetPostion(glm::vec3(6.0f, -4.0f, 1.0f));
 
-			// Add a render component 
-			RenderComponent::Sptr renderer = normalMapBall->Add<RenderComponent>();
-			renderer->SetMesh(sphere);
-			renderer->SetMaterial(normalmapMat);
+		//	// Add a render component 
+		//	RenderComponent::Sptr renderer = normalMapBall->Add<RenderComponent>();
+		//	renderer->SetMesh(sphere);
+		//	renderer->SetMaterial(normalmapMat);
 
-			demoBase->AddChild(normalMapBall);
-		}
+		//	demoBase->AddChild(normalMapBall);
+		//}
+
+	GameObject::Sptr person1 = scene->CreateGameObject("person1");
+	{
+		MeshResource::Sptr cubeMesh = ResourceManager::CreateAsset<MeshResource>();
+		cubeMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
+		cubeMesh->GenerateMesh();
+
+		person1->SetPostion(glm::vec3(5.0f, 0.0f, 1.f));
+		person1->SetScale(glm::vec3(1.5f));
+
+		RenderComponent::Sptr renderer = person1->Add<RenderComponent>();
+		renderer->SetMesh(cubeMesh);
+		renderer->SetMaterial(testMaterial);
+
+		RigidBody::Sptr physics = person1->Add<RigidBody>();
+		physics->AddCollider(BoxCollider::Create());
+
+		demoBase->AddChild(person1);
+	}
 
 		// Create a trigger volume for testing how we can detect collisions with objects!
 		GameObject::Sptr trigger = scene->CreateGameObject("Trigger");
@@ -654,7 +673,7 @@ void DefaultSceneLayer::_CreateScene()
 
 		/////////////////////////// UI //////////////////////////////
 		
-		GameObject::Sptr canvas = scene->CreateGameObject("UI Canvas"); 
+		/*GameObject::Sptr canvas = scene->CreateGameObject("UI Canvas"); 
 		{
 			RectTransform::Sptr transform = canvas->Add<RectTransform>();
 			transform->SetMin({ 16, 16 });
@@ -685,7 +704,7 @@ void DefaultSceneLayer::_CreateScene()
 			}
 
 			canvas->AddChild(subPanel);
-		}
+		}*/
 		
 
 		/*GameObject::Sptr particles = scene->CreateGameObject("Particles"); 
