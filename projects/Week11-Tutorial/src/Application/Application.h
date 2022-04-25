@@ -6,6 +6,7 @@
 #include "Application/ApplicationLayer.h"
 #include "Gameplay/Scene.h"
 
+
 struct GLFWwindow;
 
 /**
@@ -158,4 +159,7 @@ protected:
 	static std::string  _applicationName;
 
 	bool ambiLight = true;
+	float moveTime = 0; //determines how long the enemy is going to move in a direction
+	float travelDirection = 0; // value to determine which way the enemy moves
+
 };

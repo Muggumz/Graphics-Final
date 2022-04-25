@@ -630,6 +630,25 @@ void DefaultSceneLayer::_CreateScene()
 		//	demoBase->AddChild(normalMapBall);
 		//}
 
+	GameObject::Sptr person1 = scene->CreateGameObject("person1");
+	{
+		MeshResource::Sptr cubeMesh = ResourceManager::CreateAsset<MeshResource>();
+		cubeMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
+		cubeMesh->GenerateMesh();
+
+		person1->SetPostion(glm::vec3(5.0f, 0.0f, 1.f));
+		person1->SetScale(glm::vec3(1.5f));
+
+		RenderComponent::Sptr renderer = person1->Add<RenderComponent>();
+		renderer->SetMesh(cubeMesh);
+		renderer->SetMaterial(testMaterial);
+
+		RigidBody::Sptr physics = person1->Add<RigidBody>();
+		physics->AddCollider(BoxCollider::Create());
+
+		demoBase->AddChild(person1);
+	}
+
 		// Create a trigger volume for testing how we can detect collisions with objects!
 		GameObject::Sptr trigger = scene->CreateGameObject("Trigger");
 		{
