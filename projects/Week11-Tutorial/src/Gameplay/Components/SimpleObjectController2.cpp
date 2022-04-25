@@ -29,16 +29,16 @@ void SimpleObjectController::Update(float deltaTime)
 	// left and right is x axis
 
 		if (InputEngine::IsKeyDown(GLFW_KEY_W)) {
-			_moveVector.y -= _moveSpeeds.x;
-		}
-		if (InputEngine::IsKeyDown(GLFW_KEY_S)) {
 			_moveVector.y += _moveSpeeds.x;
 		}
+		if (InputEngine::IsKeyDown(GLFW_KEY_S)) {
+			_moveVector.y -= _moveSpeeds.x;
+		}
 		if (InputEngine::IsKeyDown(GLFW_KEY_A)) {
-			_moveVector.x += _moveSpeeds.y;
+			_moveVector.x -= _moveSpeeds.y;
 		}
 		if (InputEngine::IsKeyDown(GLFW_KEY_D)) {
-			_moveVector.x -= _moveSpeeds.y;
+			_moveVector.x += _moveSpeeds.y;
 		}
 		if (InputEngine::IsKeyDown(GLFW_KEY_LEFT_CONTROL)) {
 			_moveVector.y -= _moveSpeeds.z;
@@ -49,8 +49,8 @@ void SimpleObjectController::Update(float deltaTime)
 		if (InputEngine::IsKeyDown(GLFW_KEY_LEFT_SHIFT)) {
 			_moveVector += 3.0f;
 		}
-		std::cout << GetGameObject()->GetPosition().z << std::endl;
-		_moveVector *= deltaTime;
+		/*std::cout << GetGameObject()->GetPosition().z << std::endl;
+		_moveVector *= deltaTime;*/
 
 		GetGameObject()->SetPostion(GetGameObject()->GetPosition() + _moveVector);
 	}
