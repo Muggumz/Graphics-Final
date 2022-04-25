@@ -50,6 +50,9 @@
 #include "Gameplay/Components/TriggerVolumeEnterBehaviour.h"
 #include "Gameplay/Components/SimpleCameraControl.h"
 
+#include "Gameplay/Components/SimpleObjectControl.h"
+#include "Gameplay/Components/SimpleObjectController2.h"
+
 // Physics
 #include "Gameplay/Physics/RigidBody.h"
 #include "Gameplay/Physics/Colliders/BoxCollider.h"
@@ -359,7 +362,7 @@ void DefaultSceneLayer::_CreateScene()
 			camera->SetPostion({ -3, -1, 5 });
 			camera->LookAt(glm::vec3(0.0f));
 
-			camera->Add<SimpleCameraControl>();
+			//camera->Add<SimpleCameraControl>();
 
 			// This is now handled by scene itself!
 			//Camera::Sptr cam = camera->Add<Camera>();
@@ -430,12 +433,22 @@ void DefaultSceneLayer::_CreateScene()
 			renderer->SetMesh(monkeyMesh);
 			renderer->SetMaterial(monkeyMaterial);
 
-			// Example of a trigger that interacts with static and kinematic bodies as well as dynamic bodies
-			TriggerVolume::Sptr trigger = monkey1->Add<TriggerVolume>();
-			trigger->SetFlags(TriggerTypeFlags::Statics | TriggerTypeFlags::Kinematics);
-			trigger->AddCollider(BoxCollider::Create(glm::vec3(1.0f)));
+			//SimpleObjectControl::Sptr ObjControl = monkey1->Add<SimpleObjectControl>();
+			//ObjControl->setCamera(camera);
 
-			monkey1->Add<TriggerVolumeEnterBehaviour>();
+			SimpleObjectController::Sptr ObjControl = monkey1->Add<SimpleObjectController>();
+
+			// Example of a trigger that interacts with static and kinematic bodies as well as dynamic bodies
+			//TriggerVolume::Sptr trigger = monkey1->Add<TriggerVolume>();
+			//trigger->SetFlags(TriggerTypeFlags::Statics | TriggerTypeFlags::Kinematics);
+			//trigger->AddCollider(BoxCollider::Create(glm::vec3(1.0f)));
+
+			RigidBody::Sptr physics = monkey1->Add<RigidBody>(RigidBodyType::Dynamic);
+			ICollider::Sptr collider = physics->AddCollider(SphereCollider::Create());
+
+			physics->AddComponent<TriggerVolume>();
+
+			//monkey1->Add<TriggerVolumeEnterBehaviour>();
 		}
 
 		GameObject::Sptr ship = scene->CreateGameObject("Fenrir");
