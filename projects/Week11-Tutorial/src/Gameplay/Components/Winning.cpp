@@ -12,7 +12,7 @@ void Winning::OnTriggerVolumeEntered(const std::shared_ptr<Gameplay::Physics::Ri
 {
 		std::cout << "You win!!" << std::endl;
 		std::cout << "Game have Reset!!" << std::endl;
-		trigger->GetGameObject()->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+		trigger->GetGameObject()->SetPostion(glm::vec3(-7.0f, 0.0f, 1.0f));
 }
 
 void Winning::OnTriggerVolumeLeaving(const std::shared_ptr<Gameplay::Physics::RigidBody>&trigger) 

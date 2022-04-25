@@ -12,7 +12,7 @@ void EnemyTrigger::OnTriggerVolumeEntered(const std::shared_ptr<Gameplay::Physic
 {
 		std::cout << "You Lost!!" << std::endl;
 		std::cout << "Game have Reset!!" << std::endl;
-		trigger->GetGameObject()->SetPostion(glm::vec3(4.0f, 0.0f, 3.0f));
+		trigger->GetGameObject()->SetPostion(glm::vec3(-7.0f, 0.0f, 1.0f));
 }
 
 void EnemyTrigger::OnTriggerVolumeLeaving(const std::shared_ptr<Gameplay::Physics::RigidBody>&trigger) 

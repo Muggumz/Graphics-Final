@@ -144,13 +144,22 @@ void DefaultSceneLayer::_CreateScene()
 
 		// Load in the meshes
 		MeshResource::Sptr monkeyMesh = ResourceManager::CreateAsset<MeshResource>("Monkey.obj");
-		MeshResource::Sptr shipMesh   = ResourceManager::CreateAsset<MeshResource>("fenrir.obj");
+		//MeshResource::Sptr shipMesh   = ResourceManager::CreateAsset<MeshResource>("fenrir.obj");
+		MeshResource::Sptr  Player = ResourceManager::CreateAsset<MeshResource>("Character.obj");
+		MeshResource::Sptr  Enemy2 = ResourceManager::CreateAsset<MeshResource>("Enemy.obj");
+		MeshResource::Sptr  LevelRoof = ResourceManager::CreateAsset<MeshResource>("LevelRoof.obj");
+		MeshResource::Sptr  LevelFloor = ResourceManager::CreateAsset<MeshResource>("LevelFloor.obj");
+		MeshResource::Sptr  LevelBackground = ResourceManager::CreateAsset<MeshResource>("LevelBackground.obj");
 
 		// Load in some textures
 		Texture2D::Sptr    boxTexture   = ResourceManager::CreateAsset<Texture2D>("textures/box-diffuse.png");
 		Texture2D::Sptr    boxSpec      = ResourceManager::CreateAsset<Texture2D>("textures/box-specular.png");
 		Texture2D::Sptr    monkeyTex    = ResourceManager::CreateAsset<Texture2D>("textures/monkey-uvMap.png");
 		Texture2D::Sptr    leafTex      = ResourceManager::CreateAsset<Texture2D>("textures/leaves.png");
+		Texture2D::Sptr    Brick		= ResourceManager::CreateAsset<Texture2D>("textures/ExamBrick.png");
+		Texture2D::Sptr    BrickDark	= ResourceManager::CreateAsset<Texture2D>("textures/ExamBrickDark.png");
+		Texture2D::Sptr    Sword        = ResourceManager::CreateAsset<Texture2D>("textures/Sword.png");
+
 		leafTex->SetMinFilter(MinFilter::Nearest);
 		leafTex->SetMagFilter(MagFilter::Nearest);
 
@@ -222,6 +231,38 @@ void DefaultSceneLayer::_CreateScene()
 			boxMaterial->Set("u_Material.Shininess", 0.1f);
 			boxMaterial->Set("u_Material.NormalMap", normalMapDefault);
 		}
+
+		Material::Sptr Players = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			Players->Name = "Player";
+			Players->Set("u_Material.AlbedoMap",Sword);
+			Players->Set("u_Material.Shininess", 0.1f);
+			Players->Set("u_Material.NormalMap", normalMapDefault);
+		}
+
+		Material::Sptr Bricks = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			Bricks->Name = "Brick";
+			Bricks->Set("u_Material.AlbedoMap", Brick);
+			Bricks->Set("u_Material.Shininess", 0.1f);
+			Bricks->Set("u_Material.NormalMap", normalMapDefault);
+		}
+
+		Material::Sptr BrickDarks = ResourceManager::CreateAsset<Material>(deferredForward);
+		{
+			BrickDarks->Name = "BrickDark";
+			BrickDarks->Set("u_Material.AlbedoMap", BrickDark);
+			BrickDarks->Set("u_Material.Shininess", 0.1f);
+			BrickDarks->Set("u_Material.NormalMap", normalMapDefault);
+		}
+
+		//Material::Sptr EnemySkin = ResourceManager::CreateAsset<Material>(deferredForward);
+		//{
+		//	EnemySkin->Name = "Player";
+		//	EnemySkin->Set("u_Material.AlbedoMap", Sword);
+		//	EnemySkin->Set("u_Material.Shininess", 0.1f);
+		//	EnemySkin->Set("u_Material.NormalMap", normalMapDefault);
+		//}
 
 		// This will be the reflective material, we'll make the whole thing 90% reflective
 		Material::Sptr monkeyMaterial = ResourceManager::CreateAsset<Material>(deferredForward);
@@ -392,41 +433,106 @@ void DefaultSceneLayer::_CreateScene()
 			physics->AddCollider(BoxCollider::Create(glm::vec3(50.0f, 50.0f, 1.0f)))->SetPosition({ 0,0,-1 });
 		}
 
-		// Add some walls :3
+		GameObject::Sptr Level1 = scene->CreateGameObject("LevelRoof");
 		{
-			MeshResource::Sptr wall = ResourceManager::CreateAsset<MeshResource>();
-			wall->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
-			wall->GenerateMesh();
+			// Set position in the scene
+			Level1->SetPostion(glm::vec3(0.0f, 0.0f, 5.0f));
+			Level1->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+			Level1->SetScale(glm::vec3(0.8f, 0.8f, 0.8f));
 
-			GameObject::Sptr wall1 = scene->CreateGameObject("Wall1");
-			wall1->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
-			wall1->SetScale(glm::vec3(20.0f, 1.0f, 3.0f));
-			wall1->SetPostion(glm::vec3(0.0f, 10.0f, 1.5f));
-			plane->AddChild(wall1);
+			// Add some behaviour that relies on the physics body
+			//Level2->Add<JumpBehaviour>();
 
-			GameObject::Sptr wall2 = scene->CreateGameObject("Wall2");
-			wall2->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
-			wall2->SetScale(glm::vec3(20.0f, 1.0f, 3.0f));
-			wall2->SetPostion(glm::vec3(0.0f, -10.0f, 1.5f));
-			plane->AddChild(wall2);
+			// Create and attach a renderer for the monkey
+			RenderComponent::Sptr renderer = Level1->Add<RenderComponent>();
+			renderer->SetMesh(LevelRoof);
+			renderer->SetMaterial(Bricks);
 
-			GameObject::Sptr wall3 = scene->CreateGameObject("Wall3");
-			wall3->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
-			wall3->SetScale(glm::vec3(1.0f, 20.0f, 3.0f));
-			wall3->SetPostion(glm::vec3(10.0f, 0.0f, 1.5f));
-			plane->AddChild(wall3);
+			//SimpleObjectControl::Sptr ObjControl = monkey1->Add<SimpleObjectControl>();
+			//ObjControl->setCamera(camera);
 
-			GameObject::Sptr wall4 = scene->CreateGameObject("Wall4");
-			wall4->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
-			wall4->SetScale(glm::vec3(1.0f, 20.0f, 3.0f));
-			wall4->SetPostion(glm::vec3(-10.0f, 0.0f, 1.5f));
-			plane->AddChild(wall4);
+			RigidBody::Sptr physics = Level1->Add<RigidBody>(RigidBodyType::Static);
+			physics->AddCollider(ConvexMeshCollider::Create());
 		}
 
+		GameObject::Sptr Level2 = scene->CreateGameObject("LevelFloor");
+		{
+			// Set position in the scene
+			Level2->SetPostion(glm::vec3(0.0f, 0.0f, 1.0f));
+			Level2->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+			Level2->SetScale(glm::vec3(0.8f, 0.8f, 0.8f));
+
+			// Add some behaviour that relies on the physics body
+			//Level2->Add<JumpBehaviour>();
+
+			// Create and attach a renderer for the monkey
+			RenderComponent::Sptr renderer = Level2->Add<RenderComponent>();
+			renderer->SetMesh(LevelFloor);
+			renderer->SetMaterial(Bricks);
+
+			//SimpleObjectControl::Sptr ObjControl = monkey1->Add<SimpleObjectControl>();
+			//ObjControl->setCamera(camera);
+
+			RigidBody::Sptr physics = Level2->Add<RigidBody>(RigidBodyType::Static);
+			physics->AddCollider(ConvexMeshCollider::Create());
+		}
+
+		//GameObject::Sptr LevelBack = scene->CreateGameObject("LeveBack");
+		//{
+		//	// Set position in the scene
+		//	LevelBack->SetPostion(glm::vec3(10.0f, 0.0f, 1.0f));
+		//	LevelBack->SetRotation(glm::vec3(90.0f, 0.0f, 0.0f));
+
+		//	// Add some behaviour that relies on the physics body
+		//	//Level2->Add<JumpBehaviour>();
+
+		//	// Create and attach a renderer for the monkey
+		//	RenderComponent::Sptr renderer = LevelBack->Add<RenderComponent>();
+		//	renderer->SetMesh(LevelBackground);
+		//	renderer->SetMaterial(BrickDarks);
+
+		//	//SimpleObjectControl::Sptr ObjControl = monkey1->Add<SimpleObjectControl>();
+		//	//ObjControl->setCamera(camera);
+
+		//	RigidBody::Sptr physics = LevelBack->Add<RigidBody>(RigidBodyType::Static);
+		//	physics->AddCollider(ConvexMeshCollider::Create());
+		//}
+		// Add some walls :3
+		//{
+		//	MeshResource::Sptr wall = ResourceManager::CreateAsset<MeshResource>();
+		//	wall->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
+		//	wall->GenerateMesh();
+
+		//	GameObject::Sptr wall1 = scene->CreateGameObject("Wall1");
+		//	wall1->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
+		//	wall1->SetScale(glm::vec3(20.0f, 1.0f, 3.0f));
+		//	wall1->SetPostion(glm::vec3(0.0f, 10.0f, 1.5f));
+		//	plane->AddChild(wall1);
+
+		//	GameObject::Sptr wall2 = scene->CreateGameObject("Wall2");
+		//	wall2->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
+		//	wall2->SetScale(glm::vec3(20.0f, 1.0f, 3.0f));
+		//	wall2->SetPostion(glm::vec3(0.0f, -10.0f, 1.5f));
+		//	plane->AddChild(wall2);
+
+		//	GameObject::Sptr wall3 = scene->CreateGameObject("Wall3");
+		//	wall3->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
+		//	wall3->SetScale(glm::vec3(1.0f, 20.0f, 3.0f));
+		//	wall3->SetPostion(glm::vec3(10.0f, 0.0f, 1.5f));
+		//	plane->AddChild(wall3);
+
+		//	GameObject::Sptr wall4 = scene->CreateGameObject("Wall4");
+		//	wall4->Add<RenderComponent>()->SetMesh(wall)->SetMaterial(whiteBrick);
+		//	wall4->SetScale(glm::vec3(1.0f, 20.0f, 3.0f));
+		//	wall4->SetPostion(glm::vec3(-10.0f, 0.0f, 1.5f));
+		//	plane->AddChild(wall4);
+		//}
+
+		//Player
 		GameObject::Sptr monkey1 = scene->CreateGameObject("Monkey 1");
 		{
 			// Set position in the scene
-			monkey1->SetPostion(glm::vec3(1.5f, 0.0f, 1.0f));
+			monkey1->SetPostion(glm::vec3(-7.0f, 0.0f, 1.0f));
 			monkey1->SetRotation(glm::vec3(0.0f, 0.0f, 90.0f));
 
 			// Add some behaviour that relies on the physics body
@@ -434,8 +540,8 @@ void DefaultSceneLayer::_CreateScene()
 
 			// Create and attach a renderer for the monkey
 			RenderComponent::Sptr renderer = monkey1->Add<RenderComponent>();
-			renderer->SetMesh(monkeyMesh);
-			renderer->SetMaterial(monkeyMaterial);
+			renderer->SetMesh(Player);
+			renderer->SetMaterial(Players);
 
 			//SimpleObjectControl::Sptr ObjControl = monkey1->Add<SimpleObjectControl>();
 			//ObjControl->setCamera(camera);
@@ -638,16 +744,13 @@ void DefaultSceneLayer::_CreateScene()
 	GameObject::Sptr person1 = scene->CreateGameObject("person1");
 	{
 		//Enemy
-		MeshResource::Sptr cubeMesh = ResourceManager::CreateAsset<MeshResource>();
-		cubeMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
-		cubeMesh->GenerateMesh();
 
-		person1->SetPostion(glm::vec3(5.0f, 0.0f, 1.f));
+		person1->SetPostion(glm::vec3(0.0f, 0.0f, 2.f));
 		person1->SetScale(glm::vec3(1.5f));
 
 		RenderComponent::Sptr renderer = person1->Add<RenderComponent>();
-		renderer->SetMesh(cubeMesh);
-		renderer->SetMaterial(testMaterial);
+		renderer->SetMesh(Enemy2);
+		renderer->SetMaterial(Players);
 
 		Winning::Sptr Check = person1->Add<Winning>();
 		TriggerVolume::Sptr volume = Check->AddComponent<TriggerVolume>();
@@ -666,7 +769,7 @@ void DefaultSceneLayer::_CreateScene()
 		cubeMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
 		cubeMesh->GenerateMesh();
 
-		shooting->SetPostion(glm::vec3(5.0f, 0.0f, 5.0f));
+		shooting->SetPostion(glm::vec3(2.0f, 0.0f, 5.0f));
 		//shooting->SetPostion(glm::vec3(5.0f, 0.0f, 1.f));
 		shooting->SetScale(glm::vec3(0.2f));
 
