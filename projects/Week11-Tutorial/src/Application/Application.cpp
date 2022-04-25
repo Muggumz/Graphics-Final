@@ -309,6 +309,26 @@ void Application::_Update() {
 			layer->OnUpdate();
 		}
 	}
+
+	//Game Loop
+	Application& app = Application::Get();
+
+	if ((InputEngine::GetKeyState(GLFW_KEY_L) == ButtonState::Pressed))
+	{
+		if (ambiLight == true)
+		{
+			app.CurrentScene()->SetAmbientLight(glm::vec3(0.1f));
+			ambiLight = false;
+		}
+		else if (ambiLight == false)
+		{
+			app.CurrentScene()->SetAmbientLight(glm::vec3(0.4f));
+			ambiLight = true;
+		}
+	}
+
+
+
 }
 
 void Application::_LateUpdate() {
