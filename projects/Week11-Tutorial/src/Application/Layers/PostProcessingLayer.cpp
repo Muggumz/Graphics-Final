@@ -9,6 +9,8 @@
 #include "PostProcessing/OutlineEffect.h"
 #include "PostProcessing/DepthOfField.h"
 #include "PostProcessing/Pixelation.h"
+#include "PostProcessing/Blooming.h"
+#include "PostProcessing/NightVision.h"
 
 PostProcessingLayer::PostProcessingLayer() :
 	ApplicationLayer()
@@ -36,8 +38,16 @@ void PostProcessingLayer::OnAppLoad(const nlohmann::json& config)
 	_effects.push_back(std::make_shared<OutlineEffect>());
 	_effects.push_back(std::make_shared<DepthOfField>());
 	_effects.push_back(std::make_shared<Pixelation>());
+	_effects.push_back(std::make_shared<Blooming>());
+	_effects.push_back(std::make_shared<NightVision>());
 
 	GetEffect<OutlineEffect>()->Enabled = false;
+	GetEffect<ColorCorrectionEffect>()->Enabled = false;
+	GetEffect<BoxFilter3x3>()->Enabled = false;
+	GetEffect<BoxFilter5x5>()->Enabled = false;
+	GetEffect<DepthOfField>()->Enabled = false;
+	GetEffect<Blooming>()->Enabled = false;
+	GetEffect<NightVision>()->Enabled = false;
 
 	Application& app = Application::Get();
 	const glm::uvec4& viewport = app.GetPrimaryViewport();
