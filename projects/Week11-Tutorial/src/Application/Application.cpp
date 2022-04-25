@@ -51,6 +51,8 @@
 
 #include "Gameplay/Components/SimpleObjectControl.h"
 #include "Gameplay/Components/SimpleObjectController2.h"
+#include "Gameplay/Components/EnemyTrigger.h"
+#include "Gameplay/Components/Winning.h"
 
 // GUI
 #include "Gameplay/Components/GUI/RectTransform.h"
@@ -288,6 +290,8 @@ void Application::_RegisterClasses()
 
 	ComponentManager::RegisterType<SimpleObjectControl>();
 	ComponentManager::RegisterType<SimpleObjectController>();
+	ComponentManager::RegisterType<EnemyTrigger>();
+	ComponentManager::RegisterType<Winning>();
 }
 
 void Application::_Load() {

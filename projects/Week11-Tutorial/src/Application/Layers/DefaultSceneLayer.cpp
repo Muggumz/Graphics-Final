@@ -52,6 +52,8 @@
 
 #include "Gameplay/Components/SimpleObjectControl.h"
 #include "Gameplay/Components/SimpleObjectController2.h"
+#include "Gameplay/Components/EnemyTrigger.h"
+#include "Gameplay/Components/Winning.h"
 
 // Physics
 #include "Gameplay/Physics/RigidBody.h"
@@ -440,15 +442,18 @@ void DefaultSceneLayer::_CreateScene()
 
 			SimpleObjectController::Sptr ObjControl = monkey1->Add<SimpleObjectController>();
 
+			EnemyTrigger::Sptr Check = monkey1->Add<EnemyTrigger>();
+			RigidBody::Sptr physics = monkey1->Add<RigidBody>(RigidBodyType::Dynamic);
+			physics->AddCollider(ConvexMeshCollider::Create());
 			// Example of a trigger that interacts with static and kinematic bodies as well as dynamic bodies
 			//TriggerVolume::Sptr trigger = monkey1->Add<TriggerVolume>();
 			//trigger->SetFlags(TriggerTypeFlags::Statics | TriggerTypeFlags::Kinematics);
 			//trigger->AddCollider(BoxCollider::Create(glm::vec3(1.0f)));
 
-			RigidBody::Sptr physics = monkey1->Add<RigidBody>(RigidBodyType::Dynamic);
-			ICollider::Sptr collider = physics->AddCollider(SphereCollider::Create());
+			//RigidBody::Sptr physics = monkey1->Add<RigidBody>(RigidBodyType::Dynamic);
+			//ICollider::Sptr collider = physics->AddCollider(SphereCollider::Create());
 
-			physics->AddComponent<TriggerVolume>();
+			//physics->AddComponent<TriggerVolume>();
 
 			//monkey1->Add<TriggerVolumeEnterBehaviour>();
 		}
@@ -632,6 +637,7 @@ void DefaultSceneLayer::_CreateScene()
 
 	GameObject::Sptr person1 = scene->CreateGameObject("person1");
 	{
+		//Enemy
 		MeshResource::Sptr cubeMesh = ResourceManager::CreateAsset<MeshResource>();
 		cubeMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
 		cubeMesh->GenerateMesh();
@@ -643,12 +649,38 @@ void DefaultSceneLayer::_CreateScene()
 		renderer->SetMesh(cubeMesh);
 		renderer->SetMaterial(testMaterial);
 
-		RigidBody::Sptr physics = person1->Add<RigidBody>();
-		physics->AddCollider(BoxCollider::Create());
+		Winning::Sptr Check = person1->Add<Winning>();
+		TriggerVolume::Sptr volume = Check->AddComponent<TriggerVolume>();
+		ICollider::Sptr collider = volume->AddCollider(ConvexMeshCollider::Create());
+
+		//RigidBody::Sptr physics = person1->Add<RigidBody>();
+		//physics->AddCollider(BoxCollider::Create());
 
 		demoBase->AddChild(person1);
 	}
 
+	GameObject::Sptr shooting = scene->CreateGameObject("shooting");
+	{
+		//what shoots out
+		MeshResource::Sptr cubeMesh = ResourceManager::CreateAsset<MeshResource>();
+		cubeMesh->AddParam(MeshBuilderParam::CreateCube(ZERO, ONE));
+		cubeMesh->GenerateMesh();
+
+		shooting->SetPostion(glm::vec3(5.0f, 0.0f, 5.0f));
+		//shooting->SetPostion(glm::vec3(5.0f, 0.0f, 1.f));
+		shooting->SetScale(glm::vec3(0.2f));
+
+		RenderComponent::Sptr renderer = shooting->Add<RenderComponent>();
+		renderer->SetMesh(cubeMesh);
+		renderer->SetMaterial(testMaterial);
+
+		EnemyTrigger::Sptr Check = shooting->Add<EnemyTrigger>();
+		TriggerVolume::Sptr volume = Check->AddComponent<TriggerVolume>();
+		ICollider::Sptr collider = volume->AddCollider(ConvexMeshCollider::Create());
+		//RigidBody::Sptr physics = shooting->Add<RigidBody>();
+		//physics->AddCollider(BoxCollider::Create());
+
+	}
 		// Create a trigger volume for testing how we can detect collisions with objects!
 		GameObject::Sptr trigger = scene->CreateGameObject("Trigger");
 		{
