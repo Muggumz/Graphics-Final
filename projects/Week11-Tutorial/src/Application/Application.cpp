@@ -348,43 +348,50 @@ void Application::_Update() {
 			app.CurrentScene()->FindObjectByName("person1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("person1")->GetPosition().x + 0.05, app.CurrentScene()->FindObjectByName("person1")->GetPosition().y, app.CurrentScene()->FindObjectByName("person1")->GetPosition().z));
 		}
 		
-		std::cout << travelDirection << std::endl;
+		
 	}
 
-	if ((InputEngine::GetKeyState(GLFW_KEY_SPACE) == ButtonState::Pressed) && (canjumping == true))
-	{
-		jumping = true;
-		canjumping = false;
-	}
+	//if ((InputEngine::GetKeyState(GLFW_KEY_SPACE) == ButtonState::Pressed) && (canjumping == true))
+	//{
+	//	jumping = true;
+	//	canjumping = false;
+	//}
 
-	if (jumping == true)
-	{
-		if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z < 3)
-		{
-			app.CurrentScene()->FindObjectByName("Monkey 1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().x, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().y, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z + 0.05));
+	//if (canjumping == true && jumping == false)
+	//{
+	//	app.CurrentScene()->FindObjectByName("Monkey 1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().x, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().y, 1.1f));
 
-		}
-		else if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z >= 3)
-		{
-			jumping = false;
-		}
-	}
+	//}
 
-	if (jumping == false)
-	{
-		if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z >= 0)
-		{
-			app.CurrentScene()->FindObjectByName("Monkey 1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().x, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().y, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z - 0.08));
+	//if (jumping == true)
+	//{
+	//	if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z < 5)
+	//	{
+	//		app.CurrentScene()->FindObjectByName("Monkey 1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().x, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().y, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z + 0.05));
 
-		}
-		else if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z <= 0.85)
-		{
-			canjumping = true;
-		}
+	//	}
+	//	else if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z >= 5)
+	//	{
+	//		jumping = false;
+	//	}
+	//}
+	//else if(jumping == false)
+	//{
+	//	if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z > 1.1)
+	//	{
+	//		app.CurrentScene()->FindObjectByName("Monkey 1")->SetPostion(glm::vec3(app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().x, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().y, app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z - 0.08));
 
-	}
+	//	}
+	//	else if (app.CurrentScene()->FindObjectByName("Monkey 1")->GetPosition().z <= 1.3)
+	//	{
+	//		canjumping = true;
+	//	}
 
+	//}
 	
+
+	app.CurrentScene()->FindObjectByName("Monkey 1")->SetRotation(glm::vec3(0.0f, 0.0f, 90.0f));
+	std::cout << jumping << std::endl;
 }
 
 void Application::_LateUpdate() {

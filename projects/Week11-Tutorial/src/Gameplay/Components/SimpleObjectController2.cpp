@@ -24,21 +24,24 @@ void SimpleObjectController::Update(float deltaTime)
 
 		glm::vec3 _moveVector = glm::vec3(0.0f);
 
-	// up and down is Z axis
-	// forward and backwards is y axis
-	// left and right is x axis
+		// up and down is Z axis
+		// forward and backwards is y axis
+		// left and right is x axis
 
-		//if (InputEngine::IsKeyDown(GLFW_KEY_W)) {
-		//	_moveVector.y += _moveSpeeds.x;
-		//}
-		//if (InputEngine::IsKeyDown(GLFW_KEY_S)) {
-			//_moveVector.y -= _moveSpeeds.x;
-		//}
+			//if (InputEngine::IsKeyDown(GLFW_KEY_W)) {
+			//	_moveVector.y += _moveSpeeds.x;
+			//}
+			//if (InputEngine::IsKeyDown(GLFW_KEY_S)) {
+				//_moveVector.y -= _moveSpeeds.x;
+			//}
 		if (InputEngine::IsKeyDown(GLFW_KEY_A)) {
 			_moveVector.x -= _moveSpeeds.y;
 		}
 		if (InputEngine::IsKeyDown(GLFW_KEY_D)) {
 			_moveVector.x += _moveSpeeds.y;
+		}
+		if (InputEngine::IsKeyDown(GLFW_KEY_SPACE))
+			_moveVector.y += _moveSpeeds.z;
 		}
 		//if (InputEngine::IsKeyDown(GLFW_KEY_LEFT_CONTROL)) {
 			//_moveVector.y -= _moveSpeeds.z;
