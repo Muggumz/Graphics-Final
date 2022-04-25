@@ -311,7 +311,7 @@ void Application::_Update() {
 	{
 		if (ambiLight == true)
 		{
-			app.CurrentScene()->SetAmbientLight(glm::vec3(0.0f));
+			app.CurrentScene()->SetAmbientLight(glm::vec3(0.1f));
 			ambiLight = false;
 		}
 		else if (ambiLight == false)

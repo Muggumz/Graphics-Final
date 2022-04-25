@@ -342,7 +342,7 @@ void DefaultSceneLayer::_CreateScene()
 			lightComponent->SetIntensity(glm::linearRand(1.0f, 2.0f));
 		}
 
-		app.CurrentScene()->SetAmbientLight(glm::vec3(0.4f));
+		//app.CurrentScene()->SetAmbientLight(glm::vec3(0.4f));
 
 		// We'll create a mesh that is a simple plane that we can resize later
 		MeshResource::Sptr planeMesh = ResourceManager::CreateAsset<MeshResource>();
